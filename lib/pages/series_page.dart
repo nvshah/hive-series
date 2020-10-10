@@ -16,11 +16,13 @@ class SeriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Hive Concept'),
+          title: Text('Series'),
         ),
         body: Column(
           children: <Widget>[
+            //List of Series
             Expanded(child: _buildListView()),
+            //New Series
             NewSeriesForm(),
           ],
         ));
@@ -38,7 +40,7 @@ class SeriesPage extends StatelessWidget {
           itemBuilder: (BuildContext context, int idx) {
             //final series = seriesBox.get(idx) as Series;   // problematic when using put() or something deleted from Box
             final series = seriesBox.getAt(idx) as Series;
-
+            //ROW
             return ListTile(
               title: Text(series.name),
               subtitle: Text(series.ratings.toString()),
@@ -49,7 +51,7 @@ class SeriesPage extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.refresh, color: Colors.indigo,),
                     onPressed: (){
-                      return seriesBox.putAt(idx, Series('${series.name}', series.ratings + 1));
+                      return seriesBox.putAt(idx, Series('${series.name}*', series.ratings + 1));
                     },
                   ),
                   //DELETE
