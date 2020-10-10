@@ -6,7 +6,6 @@ import './models/series.dart';
 import './pages/series_page.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); //need to add this line, otherwise we will get Exception: ServiceBinding.*
   final appDocumentDir = await getApplicationDocumentsDirectory();
   // Door for Hive
   Hive.init(appDocumentDir.path);
