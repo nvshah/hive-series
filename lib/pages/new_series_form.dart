@@ -19,6 +19,7 @@ class _NewSeriesFormState extends State<NewSeriesForm> {
     //print('Name: ${series.name}, Age: ${series.ratings}');
     //* Since Hive-box is provided at top of this Widget level, it will be accessed here as it is open for this widget too. 
     final seriesBox = Hive.box('series');
+    // We are using auto-increment keys
     seriesBox.add(series);  //since we have defined typeAdapter for Series class we can direclty add series object inside add(), other wise we need to convert it to json string
     //seriesBox.add(series.tojson());
   }
@@ -57,7 +58,7 @@ class _NewSeriesFormState extends State<NewSeriesForm> {
             onPressed: () {
               _formKey.currentState.save();
               final newSeries = Series(_name, int.parse(_ratings));
-              addContact(newSeries);
+              addSeries(newSeries);
             },
           ),
         ],
