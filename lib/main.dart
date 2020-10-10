@@ -6,6 +6,7 @@ import './models/series.dart';
 import './pages/series_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); //need to add this line, otherwise we will get Exception: ServiceBinding.*
   final appDocumentDir = await getApplicationDocumentsDirectory();
   // Door for Hive
   Hive.init(appDocumentDir.path);
@@ -26,9 +27,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Hive Concepts',
+      theme: ThemeData(
+        primaryColor: Colors.deepPurple,
+      ),
       home: FutureBuilder(
         //Open Hive Box to store data further
-        future: Hive.openBox('contacts'),
+        //future: Hive.openBox('contacts'),
+        future: Hive.openBox(
+          'series',
+          //Do compaction when deleted number is more than 20
+          compactionStrategy: (int total, int deleted) {
+            return deleted > 20;
+          },
+        ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError)
@@ -47,6 +58,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
+    // //manual compaction
+    // Hive.box('series').compact();
     Hive.close();
     super.dispose();
   }
