@@ -56,9 +56,13 @@ class _NewSeriesFormState extends State<NewSeriesForm> {
           RaisedButton(
             child: Text('Add New Series'),
             onPressed: () {
+              //save the text fields value at present in form
               _formKey.currentState.save();
               final newSeries = Series(_name, int.parse(_ratings));
+              //Add series to box - 'series'
               addSeries(newSeries);
+              _formKey.currentState.reset();
+
             },
           ),
         ],
